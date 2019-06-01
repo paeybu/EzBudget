@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EzBudget</string>
+    <string name="edit_transaction_name">Name</string>
+    <string name="edit_transaction_price">Price</string>
+    <string name="type_string">Transaction Type</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="add_button">Add</string>
+    <string name="update_button">Update</string>
+</resources>
