@@ -1,7 +1,9 @@
 package com.kabu.kabi.ezbudget;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -56,14 +58,26 @@ public class MainActivity extends AppCompatActivity implements TransactionAdapte
 
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
-                AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
+                new AlertDialog.Builder(viewHolder.itemView.getContext())
+                        .setMessage("Delete?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        int position = viewHolder.getAdapterPosition();
+                                        List<TransactionEntry> trans = mAdapter.getTransactionEntries();
+                                        mDb.transactionDao().delete(trans.get(position));
+                                    }
+                                });
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
-                    public void run() {
-                        int position = viewHolder.getAdapterPosition();
-                        List<TransactionEntry> trans = mAdapter.getTransactionEntries();
-                        mDb.transactionDao().delete(trans.get(position));
+                    public void onClick(DialogInterface dialog, int which) {
+                        setupViewModel();
                     }
-                });
+                }).create().show();
             }
         }).attachToRecyclerView(mRecyclerView);
 
