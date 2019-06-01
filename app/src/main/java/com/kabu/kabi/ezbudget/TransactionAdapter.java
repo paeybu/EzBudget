@@ -43,7 +43,8 @@ class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.Transac
 
         holder.transactionNameView.setText(name);
         holder.updatedAtView.setText(createdAt);
-        holder.priceView.setText(Double.toString(price));
+        String value = String.format("%,.2f", price);
+        holder.priceView.setText(value);
 
         if (type == 1) {
             holder.priceView.setTextColor(mContext.getResources().getColor(R.color.green));
