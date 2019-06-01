@@ -16,7 +16,7 @@ import java.util.Locale;
 
 class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
 
-    private static final String DATE_FORMAT = "dd/MM/yyy hh:mm:ss";
+    private static final String DATE_FORMAT = "dd/MM/yyy hh:mm";
     final private ItemClickListener mItemClickListener;
     private List<TransactionEntry> mTransactionEntries;
     private Context mContext;
