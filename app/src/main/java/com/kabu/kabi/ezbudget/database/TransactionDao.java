@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface TransactionDao {
 
-    @Query("SELECT * FROM `transaction` ORDER BY created_at")
+    @Query("SELECT * FROM `transaction` ORDER BY created_at DESC")
     LiveData<List<TransactionEntry>> loadAllTransactions();
 
     @Query("SELECT SUM(price) FROM `transaction` WHERE type = 1")
