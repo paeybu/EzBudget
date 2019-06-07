@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.kabu.kabi.ezbudget.database.AppDatabase;
 import com.kabu.kabi.ezbudget.database.TransactionEntry;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TransactionAdapter.ItemClickListener {
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements TransactionAdapte
         });
 
         mDb = AppDatabase.getInstance(getApplicationContext());
+        summary();
     }
 
     private void summary() {
@@ -101,12 +103,13 @@ public class MainActivity extends AppCompatActivity implements TransactionAdapte
                 mTotalExpense = mDb.transactionDao().getExpenseSum();
             }
         });
+        DecimalFormat df2 = new DecimalFormat("#.##");
         double net = mTotalIncome - mTotalExpense;
-        mIncomeSum.setText("Total incomes: " + mTotalIncome);
+        mIncomeSum.setText("Total incomes: " + df2.format(mTotalIncome));
         mIncomeSum.setTextColor(getResources().getColor(R.color.green));
-        mExpenseSum.setText("Total expenses: " + mTotalExpense);
+        mExpenseSum.setText("Total expenses: " + df2.format(mTotalExpense));
         mExpenseSum.setTextColor(getResources().getColor(R.color.red));
-        mDifferenceSum.setText("Net: " + net);
+        mDifferenceSum.setText("Net: " + df2.format(net));
 
         if (net < 0) {
             mDifferenceSum.setTextColor(getResources().getColor(R.color.red));
